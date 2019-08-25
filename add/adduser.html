@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>添加用户</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript">
+        function check() {
+            var phoneid = document.getElementById("phoneid").value;
+            if (phoneid == '') {
+                alert("手机号不能为空");
+                return false;
+            } else if (phoneid.length != 11) {
+                alert("手机号填写错误");
+                return false;
+            }
+            var key = document.getElementById("key").value;
+            if (key == '') {
+                alert("key不能为空");
+                return false;
+            } else if (key.length < 20 || key.length > 100) {
+                alert("key长度错误");
+                return false;
+            }
+        }
+      function cl(){
+        	document.getElementById("phoneid").value=""
+        	document.getElementById("key").value=""
+      }
+    </script>
+</head>
+
+<body onload="return cl();">
+    <main>
+        <form class="form" action="../adduser.php" method="get" onsubmit="return check();">
+            <div class="form__cover"></div>
+            <div class="form__loader">
+                <div class="spinner active">
+                    <svg class="spinner__circular" viewBox="25 25 50 50">
+                        <circle class="spinner__path" cx="50" cy="50" r="20" fill="none" stroke-width="4"
+                            stroke-miterlimit="10"></circle>
+                    </svg>
+                </div>
+            </div>
+            <div class="form__content">
+                <h1>AddUser</h1>
+                <div class="styled-input">
+                    <input type="text" class="styled-input__input" name="phoneid" id="phoneid" autocomplete="off">
+                    <div class="styled-input__placeholder">
+                        <span class="styled-input__placeholder-text">手机号</span>
+                    </div>
+                    <div class="styled-input__circle"></div>
+                </div>
+                <div class="styled-input">
+                    <input type="text" class="styled-input__input" name="key" id="key" autocomplete="off">
+                    <div class="styled-input__placeholder">
+                        <span class="styled-input__placeholder-text">key</span>
+                    </div>
+                    <div class="styled-input__circle"></div>
+                </div>
+                <button type="submit" class="styled-button">
+                    <span class="styled-button__real-text-holder">
+                        <span class="styled-button__real-text">Submit</span>
+                        <span class="styled-button__moving-block face">
+                            <span class="styled-button__text-holder">
+                                <span class="styled-button__text">Submit</span>
+                            </span>
+                        </span><span class="styled-button__moving-block back">
+                            <span class="styled-button__text-holder">
+                                <span class="styled-button__text">Submit</span>
+                            </span>
+                        </span>
+                    </span>
+                </button>
+            </div>
+
+        </form>
+    </main>
+
+    <script src="js/index.js"></script>
+
+</body>
+
+</html>
