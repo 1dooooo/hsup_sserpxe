@@ -18,7 +18,7 @@ def query(id):
     r = requests.get(url, headers=headers)
     result = re.search(r'jsonp1\((.*)\);', r.text, re.I)
     result = json.loads(result.group(1))
-    if not result['status']["company"]:
+    if not result['data']["company"]:
         return "ERROR_FAULT_CODE", ""
     elif result['status'] == 1:
         return "SUCCESS", result["data"]
@@ -37,6 +37,8 @@ def sc_noti(key, description, full):
                                                       state=i.get('context'))
     print(text)
 
+    if key =="test":
+        return
     sc_url = 'https://sc.ftqq.com/' + key + '.send'
     requests.post(sc_url, data={'text': text, 'desp': desp})
 
@@ -114,9 +116,7 @@ def send(phoneid):
         data_n[id] = data[id]
         time.sleep(6)
 
-    with open(root_path + "/data/" + phoneid + "_data.json",
-              "w",
-              encoding="utf8") as a:
+    with open(root_path + "/data/" + phoneid + "_data.json","w",encoding="utf8") as a:
         a.write(json.dumps(data_n, ensure_ascii=False))
 
 
