@@ -1,5 +1,6 @@
-#   crontab -e
-#   (*/30 * * * * python3 /www/wwwroot/idooooo.tk/express/main.py >> /www/wwwroot/idooooo.tk/express/out.log 2>&1)
+# 定时任务执行
+# crontab -e
+#   (*/30 * * * * python3 (rootpath)/main.py >> (rootpath)/out.log 2>&1)
 #
 
 import json

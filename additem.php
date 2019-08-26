@@ -13,7 +13,7 @@ if( $phoneid && $name && $id ){
     $array_phoneid = json_decode($json_phoneid, true); 
 
     if(!in_array($phoneid, $array_phoneid["phoneid"])){
-        echo $phoneid . "用户未添加kay, 访问idooooo/express/adduser 进行添加";
+        echo $phoneid . "用户未添加kay, 访问/adduser.html 进行添加";
     }else{
         $json_config = file_get_contents('./config/' . $phoneid . '_config.json');
         $config = json_decode($json_config, true); 
