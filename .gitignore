@@ -1,4 +1,5 @@
 .vscode
-/config
-/data
+/config/*.json
+/data/*.json
 phoneid.json
+out.log
