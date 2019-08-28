@@ -96,10 +96,14 @@ function t(a, b, c) {
 }
 TM = t
 
-function tme(a, b, d, c, s, t) {
+function TME(a, b, d, c, s, t) {
     c = c || 'trackingmore';
     s = s || Math.floor(d / 888);
     s = s.toString();
     t = t || s.length;
     return TM(TM(c) + "::" + a + ":" + TM(Math.floor(d / 1000)) + ":" + TM(b))
+}
+
+function encryption(a, b, c) {
+    return TME(TM(a), TM(b), c)
 }

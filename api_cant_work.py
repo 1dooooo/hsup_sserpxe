@@ -17,6 +17,8 @@ headers = {
     # "no-cors",
     # "sec-fetch-site":
     # "same-origin",
+    "Referer":
+    "https://www.trackingmore.com/index",
     "user-agent":
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36",
 }
@@ -39,18 +41,18 @@ params = {
     #"_": "",
 }
 
-params["tracknumber"] = ""
-params["express"] = ""
+params["tracknumber"] = "JDX000484862692"
+params["express"] = "jd"
 
 random_list = random.choices("0123456789", k=15)
 random_str_15 = "".join(random_list)
 str_time = str(time.time()).split(".")
 cur_time = str_time[0] + str_time[1][:3]
-cur_time_last_1 = cur_time[:-9] + str(int(cur_time[-9:])-1)
-cur_time_last_2 = cur_time[:-9] + str(int(cur_time[-9:])-2)
+cur_time_last_1 = cur_time[:-9] + str(int(cur_time[-9:]) - 1)
+cur_time_last_2 = cur_time[:-9] + str(int(cur_time[-9:]) - 2)
 
-ctx = execjs.compile(open("./js/tme.js", 'r').read())
-mi = ctx.call("tme", params["tracknumber"], params["express"], cur_time)
+ctx = execjs.compile(open("./js/encryption.js", 'r').read())
+mi = ctx.call("encryption", params["tracknumber"], params["express"], cur_time)
 
 params["callback"] = "jQuery19107" + random_str_15 + "_" + cur_time_last_2
 params["validate"] = mi
