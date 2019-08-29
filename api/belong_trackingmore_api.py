@@ -1,7 +1,8 @@
-import execjs
 import requests
-import time
-import random
+import json
+import re
+url = "https://www.trackingmore.com/index_ajax.php"
+
 headers = {
     # "accept":
     # "*/*",
@@ -22,42 +23,13 @@ headers = {
     "user-agent":
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36",
 }
-params = {
+datas = {
     "lang": "cn",
-    "callback": "",
     "tracknumber": "",
-    "express": "",
-    "express_amazon": "",
-    #"track_number_orderId_ge": "",
-    "pt": "1",
-    "tracm": "",
-    #"destination": "",
-    #"track_account": "",
-    "account": "",
-    "multiple": "1",
-    #"againtrack": "",
-    #"exception": "0",
-    "validate": "",
-    #"_": "",
 }
 
-params["tracknumber"] = "JDX000484862692"
-params["express"] = "jd"
-
-random_list = random.choices("0123456789", k=15)
-random_str_15 = "".join(random_list)
-str_time = str(time.time()).split(".")
-cur_time = str_time[0] + str_time[1][:3]
-cur_time_last_1 = cur_time[:-9] + str(int(cur_time[-9:]) - 1)
-cur_time_last_2 = cur_time[:-9] + str(int(cur_time[-9:]) - 2)
-
-ctx = execjs.compile(open("./js/encryption.js", 'r').read())
-mi = ctx.call("encryption", params["tracknumber"], params["express"], cur_time)
-
-params["callback"] = "jQuery19107" + random_str_15 + "_" + cur_time_last_2
-params["validate"] = mi
-params["_"] = cur_time_last_1
-
-url = "https://www.trackingmore.com/gettracedetail.php"
-r = requests.get(url, params=params, headers=headers)
-print(r.text)
+def belong(tracknumber):
+    datas["tracknumber"] = tracknumber
+    r = requests.post(url,data=datas, headers=headers)
+    company_code = json.loads(r.text)[0]["company_code"]
+    return company_code
