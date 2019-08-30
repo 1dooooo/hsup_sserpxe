@@ -73,6 +73,7 @@ def detail(tracknumber, express):
     build_parems(tracknumber, express)
     url = "https://www.trackingmore.com/gettracedetail.php"
     r = requests.get(url, params=params, headers=headers)
-    result_json = re.search(r'jsonp1\((.*)\);', r.text, re.I)
-    return json.dumps(result_json)
+    jsonp = r.text.replace("\/", "//").encode('utf-8').decode('unicode_escape')
+    result_json = re.search(r'jQuery.*\((.*)\)',jsonp , re.I).group(1)
+    return json.loads(result_json)
     # print(r.text.replace("\/", "//").encode('utf-8').decode('unicode_escape'))

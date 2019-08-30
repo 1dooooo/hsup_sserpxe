@@ -15,4 +15,4 @@ def _choice(r):
     return False
 
 if __name__ == "__main__":
-    detail_proxy("75168316327377","zto")
+    print(detail_proxy("75168316327377","zto"))

@@ -1,1 +1,0 @@
-('SUCCESS', {'code': 'zhongtong', 'company': '中通快递', 'hasItem': 'true', 'img': '//ims-cdn0.sm.cn/im...150&x.jpg', 'messages': [...], 'nu': '75168316327377', 'source_name': '菜鸟裹裹', 'source_url': 'https://m.guoguo-ap...7&from=sm', 'status': '已签收', ...})
