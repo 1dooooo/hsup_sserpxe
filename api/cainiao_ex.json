@@ -1,4 +1,4 @@
-jsonp1({
+{
     "status": 1,
     "msg": "",
     "data": {
@@ -51,4 +51,4 @@ jsonp1({
         "source_name": "菜鸟裹裹",
         "source_url": "https://m.guoguo-app.com/?source=10019857&from=sm"
     }
-});
+}
