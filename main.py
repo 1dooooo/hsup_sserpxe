@@ -58,7 +58,7 @@ def send(phoneid):
             print("请求接口错误\n")
             continue
         state, result = handle_result(api_com, result)
-        data[id] = handle_data(data[id], key, description,state, result, company)
+        data[id] = handle_data(data[id], key, description,state, result,company=company)
 
         # 写入数据，舍弃旧数据
         data_new[id] = data[id]
