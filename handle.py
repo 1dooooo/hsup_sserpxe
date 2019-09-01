@@ -22,7 +22,7 @@ def handle_result(api_com, result_json):
                 temp_item["time"] = item["Date"]
                 temp_item["context"] = item["StatusDescription"]
                 track.append(temp_item)
-            if result_json["originCountryData"]["stausDataNum"] != "4":
+            if str(result_json["originCountryData"]["stausDataNum"]) != "4":
                 state = "运输中"
             else:
                 state = "已签收"

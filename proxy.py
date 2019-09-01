@@ -5,7 +5,7 @@ import random
 
 
 def detail_proxy(code, company=None):
-    if _choice(0) and company != None:
+    if _choice(100) and company != None:
         api_com = "tracking"
         result = detail_trackingmore_api.detail(code, company)
     else:

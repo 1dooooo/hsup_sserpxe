@@ -1,1 +1,10 @@
-{"key":"test","post_list":[{"description":"首次添加测试","id":"75168316327377","company":"zto"}]}
+{
+    "key": "test",
+    "post_list": [
+        {
+            "description": "首次添加测试",
+            "id": "75",
+            "company": "zto"
+        }
+    ]
+}

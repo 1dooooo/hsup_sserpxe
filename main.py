@@ -24,6 +24,13 @@ def is_signed(state):
     return flag
 
 
+def is_jd_express(id):
+    if id.find("jd") >= 0 or id.find("JD") >= 0:
+        return "jd"
+    else:
+        return None
+
+
 def send(phoneid):
 
     data = get_one_user_data(phoneid)
@@ -34,6 +41,8 @@ def send(phoneid):
     for i in config.get("post_list"):
         id = i.get('id')
         company = i.get('company')
+        if not company:
+            company = is_jd_express(id)
         description = i.get('description')
 
         if not id or not description:
@@ -50,7 +59,8 @@ def send(phoneid):
             data_new[id] = data[id]
             continue
 
-        print("---------------{time}---------------".format(time=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
+        print("---------------{time}---------------".format(
+            time=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
         print("尝试读取{description}:{id}".format(description=description, id=id))
         try:
             api_com, result = detail_proxy(id, company)
@@ -58,7 +68,8 @@ def send(phoneid):
             print("请求接口错误\n")
             continue
         state, result = handle_result(api_com, result)
-        data[id] = handle_data(data[id], key, description,state, result,company=company)
+        data[id] = handle_data(data[id], key, description,
+                               state, result, company=company)
 
         # 写入数据，舍弃旧数据
         data_new[id] = data[id]
@@ -69,5 +80,6 @@ def send(phoneid):
 
 ids = get_all_user_phone()
 for phoneid in ids.get("phoneid"):
-    print("+ = + = + = + = + ={phoneid} + = + = + = + = + =".format(phoneid=phoneid))
+    print(
+        "+ = + = + = + = + ={phoneid} + = + = + = + = + =".format(phoneid=phoneid))
     send(phoneid)
