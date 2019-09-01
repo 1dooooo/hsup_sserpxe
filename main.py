@@ -4,8 +4,9 @@ import time
 import requests
 import re
 
-from handle_result import handle
+from handle import handle_data, handle_result
 from proxy import detail_proxy
+from info import get_all_user_phone, get_one_user_config, get_one_user_data, set_one_user_data
 
 ERROR = ("ERROR_FAULT_CODE", "ERROR_NOT_CODE", "ERROR_UNKNOW")
 SUCCESS = ("SUCCESS")
@@ -24,19 +25,15 @@ def is_signed(state):
 
 
 def send(phoneid):
-    with open(root_path + "/data/" + phoneid + "_data.json",
-              encoding="utf8") as a:
-        data = json.loads(a.read())
 
-    with open(root_path + "/config/" + phoneid + "_config.json",
-              encoding="utf8") as b:
-        config = json.loads(b.read())
+    data = get_one_user_data(phoneid)
+    config = get_one_user_config(phoneid)
 
-    data_n = {}
+    data_new = {}
     key = config.get("key")
     for i in config.get("post_list"):
         id = i.get('id')
-        compony = i.get('compony')
+        company = i.get('company')
         description = i.get('description')
 
         if not id or not description:
@@ -50,33 +47,27 @@ def send(phoneid):
 
         # 状态已经是已签收
         if is_signed(data.get(id).get('state', '0')):
-            data_n[id] = data[id]
+            data_new[id] = data[id]
             continue
 
-        print("-----------{time}-----------".format(
-            time=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
+        print("---------------{time}---------------".format(time=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
         print("尝试读取{description}:{id}".format(description=description, id=id))
         try:
-            status, result = detail_proxy(id, compony)
+            api_com, result = detail_proxy(id, company)
         except:
             print("请求接口错误\n")
             continue
-
-        handle(key, id, description, compony, status, result)
+        state, result = handle_result(api_com, result)
+        data[id] = handle_data(data[id], key, description,state, result, company)
 
         # 写入数据，舍弃旧数据
-        data_n[id] = data[id]
+        data_new[id] = data[id]
         time.sleep(6)
 
-    with open(root_path + "/data/" + phoneid + "_data.json",
-              "w",
-              encoding="utf8") as a:
-        a.write(json.dumps(data_n, ensure_ascii=False))
+    set_one_user_data(phoneid, data_new)
 
 
-with open(root_path + "/phoneid.json", encoding="utf8") as a:
-    ids = json.loads(a.read())
-    for phoneid in ids.get("phoneid"):
-        print("+ = + = + = + ={phoneid} + = + = + = + = + =\n".format(
-            phoneid=phoneid))
-        send(phoneid)
+ids = get_all_user_phone()
+for phoneid in ids.get("phoneid"):
+    print("+ = + = + = + = + ={phoneid} + = + = + = + = + =".format(phoneid=phoneid))
+    send(phoneid)

@@ -3,3 +3,4 @@
 /data/*.json
 phoneid.json
 out.log
+__pycache__

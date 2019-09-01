@@ -14,11 +14,12 @@ def detail(id):
     r = requests.get(url, headers=headers)
     result = re.search(r'jsonp1\((.*)\);', r.text, re.I)
     result = json.loads(result.group(1))
-    if not result['data']["company"]:
-        return "ERROR_FAULT_CODE", ""
-    elif result['status'] == 1:
-        return "SUCCESS", result["data"]
-    elif result['status'] == 0:
-        return "ERROR_NOT_CODE", ""
-    else:
-        return "ERROR_UNKNOW", ""
+    return result
+    # if not result['data']["company"]:
+    #     return "ERROR_FAULT_CODE", ""
+    # elif result['status'] == 1:
+    #     return "SUCCESS", result["data"]
+    # elif result['status'] == 0:
+    #     return "ERROR_NOT_CODE", ""
+    # else:
+    #     return "ERROR_UNKNOW", ""

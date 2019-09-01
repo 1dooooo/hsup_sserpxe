@@ -6,7 +6,7 @@ headers = {
 }
 
 
-def sc_noti(key, description, full):
+def serverjiang_push(key, description, full):
     text = '!-{description}-!快递状态变化'.format(description=description)
 
     desp = ''
