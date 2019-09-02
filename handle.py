@@ -16,9 +16,9 @@ def handle_result(api_com, result_json):
                 state = "已签收"
     elif api_com == "tracking":
         if str(result_json["originCountryData"]["infoState"]) == "2":
-            temp_item = {}
             original_track = result_json["originCountryData"]["trackinfo"]
             for item in original_track:
+                temp_item = {}
                 temp_item["time"] = item["Date"]
                 temp_item["context"] = item["StatusDescription"]
                 track.append(temp_item)

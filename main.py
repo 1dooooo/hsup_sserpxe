@@ -64,8 +64,9 @@ def send(phoneid):
         print("尝试读取{description}:{id}".format(description=description, id=id))
         try:
             api_com, result = detail_proxy(id, company)
-        except:
+        except Exception as e :
             print("请求接口错误\n")
+            print(e)
             continue
         state, result = handle_result(api_com, result)
         data[id] = handle_data(data[id], key, description,

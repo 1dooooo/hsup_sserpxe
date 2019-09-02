@@ -4,7 +4,7 @@ import time
 import random
 import json
 import re
-
+import os
 
 headers = {
     # "accept":
@@ -64,7 +64,8 @@ def build_parems(tracknumber, express):
 
 
 def encrypt(tracknumber, express, c_time):
-    ctx = execjs.compile(open("./api/js/encryption.js", 'r').read())
+    root_path = os.path.split(os.path.realpath(__file__))[0]
+    ctx = execjs.compile(open(root_path + "/js/encryption.js", 'r').read())
     mi = ctx.call("encryption", tracknumber, express, c_time)
     return mi
 
