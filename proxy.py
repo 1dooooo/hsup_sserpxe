@@ -21,6 +21,5 @@ def _choice(r,company):
     #     return True
     return False
 
-
 # if __name__ == "__main__":
 #     print(detail_proxy("75168316327377", "zto"))
