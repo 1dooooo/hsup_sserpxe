@@ -2,5 +2,6 @@
 /config/*.json
 /data/*.json
 phoneid.json
+
 out.log
 __pycache__

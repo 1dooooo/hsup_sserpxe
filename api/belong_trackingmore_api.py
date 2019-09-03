@@ -2,7 +2,11 @@ import requests
 import json
 import re
 url = "https://www.trackingmore.com/index_ajax.php"
-
+usual_code_list = [
+    "京东快递", "顺丰国际", "顺丰速运", "申通快递", "圆通快递", "天天快递", "中通快递", "宅急送快递", "韵达快递",
+    "德邦物流", "百世快递", "百世快运", "速通物流", "优速快递", "速尔快递", "中国 EMS", "TNT", "中国邮政",
+    "中铁物流", "CNE国际快递", "捷买送", "递四方", "安骏物流", "J-NET捷网", "深圳淼信国际物流"
+]
 headers = {
     # "accept":
     # "*/*",
@@ -28,8 +32,16 @@ datas = {
     "tracknumber": "",
 }
 
+
+def is_usual(com_code):
+    return com_code in usual_code_list
+
+
 def belong(tracknumber):
     datas["tracknumber"] = tracknumber
-    r = requests.post(url,data=datas, headers=headers)
-    company_code = json.loads(r.text)[0]["company_code"]
-    return company_code
+    r = requests.post(url, data=datas, headers=headers)
+    com_lsit = json.loads(r.text)
+    for item in com_lsit:
+        if is_usual(item["company_name"]):
+            return item["company_code"]
+    return com_lsit[0]["company_code"]

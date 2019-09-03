@@ -1,12 +1,23 @@
 from push import serverjiang_push
 import os
+import time
 ERROR = ("ERROR_FAULT_CODE", "ERROR_NOT_CODE", "ERROR_UNKNOW")
 SUCCESS = ("SUCCESS")
 root_path = os.path.split(os.path.realpath(__file__))[0]
 
 
-def handle_result(api_com, result_json):
+def fix_time(to_fix_time, to_add):
+    # 2019-09-03 05:34:29
+    fixed_time_stamp = int(time.mktime(time.strptime(
+        to_fix_time, "%Y-%m-%d %H:%M:%S"))) + int(to_add)
+    fixed_time = time.strftime(
+        "%Y-%m-%d %H:%M:%S", time.localtime(fixed_time_stamp))
+    return fixed_time
+
+
+def handle_result(api_com, result_json, company=None):
     track = []
+    state = None
     if api_com == "cainiao":
         if str(result_json["status"]) == "1":
             track = result_json["data"]["messages"]
@@ -20,6 +31,8 @@ def handle_result(api_com, result_json):
             for item in original_track:
                 temp_item = {}
                 temp_item["time"] = item["Date"]
+                if company == "jd":
+                    temp_item["time"] = fix_time(item["Date"], 60*60*8)
                 temp_item["context"] = item["StatusDescription"]
                 track.append(temp_item)
             if str(result_json["originCountryData"]["stausDataNum"]) != "4":
@@ -28,10 +41,12 @@ def handle_result(api_com, result_json):
                 state = "已签收"
     else:
         pass
-    return state,track
+    return state, track
 
 
-def handle_data(data, key, description, state,result,company=None):
+def handle_data(data, key, description, state, result, company=None):
+    if not(state and result):
+        return data
     last_time = result[0].get('time')
     context = result[0].get('context')
     if last_time != data.get('last_time'):
@@ -42,7 +57,7 @@ def handle_data(data, key, description, state,result,company=None):
         serverjiang_push(key, description, result)
         print("更新数据为 : {context}\n".format(context=context))
     else:
-        print("未更新数据.\n")
+        print("未更新数据."+"in\t "+last_time+"\n")
     return data
     # if status in ERROR:
     #     print('快递单号数据出错！', i, '\n')

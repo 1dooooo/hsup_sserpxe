@@ -5,8 +5,9 @@ import requests
 import re
 
 from handle import handle_data, handle_result
-from proxy import detail_proxy
+from proxy import detail_proxy, belong_to_proxy
 from info import get_all_user_phone, get_one_user_config, get_one_user_data, set_one_user_data
+
 
 ERROR = ("ERROR_FAULT_CODE", "ERROR_NOT_CODE", "ERROR_UNKNOW")
 SUCCESS = ("SUCCESS")
@@ -43,6 +44,7 @@ def send(phoneid):
         company = i.get('company')
         if not company:
             company = is_jd_express(id)
+            company = belong_to_proxy(id)
         description = i.get('description')
 
         if not id or not description:
@@ -64,11 +66,11 @@ def send(phoneid):
         print("尝试读取{description}:{id}".format(description=description, id=id))
         try:
             api_com, result = detail_proxy(id, company)
-        except Exception as e :
+        except Exception as e:
             print("请求接口错误\n")
             print(e)
             continue
-        state, result = handle_result(api_com, result)
+        state, result = handle_result(api_com, result, company)
         data[id] = handle_data(data[id], key, description,
                                state, result, company=company)
 

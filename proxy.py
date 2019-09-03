@@ -4,8 +4,17 @@ from api import belong_trackingmore_api, datail_cainiao_api, detail_trackingmore
 import random
 
 
+def _choice(r, company):
+    if company:
+        if company == "jd":
+            return True
+        if random.randint(0, r):
+            return True
+    return False
+
+
 def detail_proxy(code, company=None):
-    if _choice(1,company):
+    if _choice(1, company):
         api_com = "tracking"
         result = detail_trackingmore_api.detail(code, company)
     else:
@@ -14,12 +23,11 @@ def detail_proxy(code, company=None):
     return api_com, result
 
 
-def _choice(r,company):
-    if company:
-        return True
-    # if random.randint(0, r):
-    #     return True
-    return False
+def belong_to_proxy(code):
+    try:
+        return belong_trackingmore_api.belong(code)
+    except:
+        return ""
 
 # if __name__ == "__main__":
 #     print(detail_proxy("75168316327377", "zto"))
