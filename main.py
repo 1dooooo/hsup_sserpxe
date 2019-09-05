@@ -25,9 +25,15 @@ def is_signed(state):
     return flag
 
 
-def is_jd_express(id):
+def get_express_from_id(id):
     if id.find("jd") >= 0 or id.find("JD") >= 0:
         return "jd"
+    if id.find("YT") >= 0 or id.find("yt") >= 0:
+        return "yto"
+    if id.find("TT") >= 0 or id.find("tt") >= 0:
+        return "ttkd"
+    if id.find("SF") >= 0 or id.find("sf") >= 0:
+        return "sf-express"
     else:
         return None
 
@@ -43,7 +49,7 @@ def send(phoneid):
         id = i.get('id')
         company = i.get('company')
         if not company:
-            company = is_jd_express(id)
+            company = get_express_from_id(id)
             company = belong_to_proxy(id)
         description = i.get('description')
 
@@ -67,8 +73,10 @@ def send(phoneid):
         try:
             api_com, result = detail_proxy(id, company)
         except Exception as e:
-            print("请求接口错误\n")
+            print("请求接口错误 with "+api_com)
             print(e)
+            if not api_com == "cainiao":
+                api_com, result = detail_proxy(id)
             continue
         state, result = handle_result(api_com, result, company)
         data[id] = handle_data(data[id], key, description,
@@ -83,6 +91,6 @@ def send(phoneid):
 
 ids = get_all_user_phone()
 for phoneid in ids.get("phoneid"):
-    print(
-        "+ = + = + = + = + ={phoneid} + = + = + = + = + =".format(phoneid=phoneid))
+    print("+ = + = + = {t} = + = + ={phoneid}+ = + = + = {t} = + = + =".format(
+        phoneid=phoneid, t=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
     send(phoneid)

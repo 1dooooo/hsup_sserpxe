@@ -29,5 +29,3 @@ def belong_to_proxy(code):
     except:
         return ""
 
-# if __name__ == "__main__":
-#     print(detail_proxy("75168316327377", "zto"))
