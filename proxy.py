@@ -14,12 +14,20 @@ def _choice(r, company):
 
 
 def detail_proxy(code, company=None):
-    if _choice(1, company):
-        api_com = "tracking"
-        result = detail_trackingmore_api.detail(code, company)
-    else:
-        api_com = "cainiao"
-        result = datail_cainiao_api.detail(code)
+    try:
+        if _choice(2, company):
+            api_com = "tracking"
+            result = detail_trackingmore_api.detail(code, company)
+        else:
+            api_com = "cainiao"
+            result = datail_cainiao_api.detail(code)
+    except Exception as e:
+        print("请求接口错误 with "+api_com)
+        print(e)
+        if not api_com == "cainiao":
+            api_com = "cainiao"
+            result = datail_cainiao_api.detail(code)
+
     return api_com, result
 
 

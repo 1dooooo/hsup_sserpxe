@@ -4,6 +4,7 @@ import time
 import requests
 import re
 
+from logger import logger
 from handle import handle_data, handle_result
 from proxy import detail_proxy, belong_to_proxy
 from info import get_all_user_phone, get_one_user_config, get_one_user_data, set_one_user_data
@@ -35,7 +36,7 @@ def get_express_from_id(id):
     if id.find("SF") >= 0 or id.find("sf") >= 0:
         return "sf-express"
     else:
-        return None
+        return belong_to_proxy(id)
 
 
 def send(phoneid):
@@ -50,9 +51,7 @@ def send(phoneid):
         company = i.get('company')
         if not company:
             company = get_express_from_id(id)
-            company = belong_to_proxy(id)
         description = i.get('description')
-
         if not id or not description:
             print('\nconfig.py文件错误！', i, '\n')
             return
@@ -73,10 +72,7 @@ def send(phoneid):
         try:
             api_com, result = detail_proxy(id, company)
         except Exception as e:
-            print("请求接口错误 with "+api_com)
-            print(e)
-            if not api_com == "cainiao":
-                api_com, result = detail_proxy(id)
+            print("请求接口错误 with "+e)
             continue
         state, result = handle_result(api_com, result, company)
         data[id] = handle_data(data[id], key, description,
