@@ -51,7 +51,7 @@ def send(phoneid):
         company = info.get('company')
         if not company:
             company = get_express_from_id(id)
-            config["items"]["id"]["company"] = company
+            config["items"][id]["company"] = company
         description = info.get('description')
         if not id or not description:
             print('\nconfig.py文件错误！', id, '\n')
