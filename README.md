@@ -22,19 +22,18 @@ git clone https://github.com/1dooooo/hsup_sserpxe.git
 
 ### 1.4 添加定时任务
 
-使用定时任务命令 crontab 来进行定时任务的添加.
+使用定时任务命令 `crontab` 来进行定时任务的添加.
 ``` shell
 crontab -e  
 ```
 
-在首行添加
-``` 
+该命令会打开（或由用户选择）一个文本编辑器用于编辑定时任务，在首行添加
+``` sh
 */30 * * * * python3 [YOURPATH]/main.py >> [YOURPATH]/out.log 2>&1
-### 例如 : 
-###   */30 * * * * python3 /www/express/main.py >> /www/express/out.log 2>&1
+# 例如 : 
+# */30 * * * * python3 /www/express/main.py >> /www/express/out.log 2>&1
 ```
-其中[YOURPATH]替换为项目根目录.
-其中 */30 指代每30分钟执行一次,即30分钟进行一次查询. 这个时间将直接影响推送的延时效性.
+其中`[YOURPATH]`替换为项目根目录，`*/30`指代每30分钟执行一次,即30分钟进行一次查询. 这个时间将直接影响推送的延时效性.
 
 ### 1.5 进入add/adduser.html 添加用户信息
 
