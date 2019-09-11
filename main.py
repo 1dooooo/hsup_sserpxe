@@ -7,7 +7,7 @@ import re
 from logger import logger
 from handle import handle_data, handle_result
 from proxy import detail_proxy, belong_to_proxy
-from info import get_all_user_phone, get_one_user_config, get_one_user_data, set_one_user_data
+from info import get_all_user_phone, get_one_user_config, get_one_user_data, set_one_user_data,set_one_user_config
 
 
 ERROR = ("ERROR_FAULT_CODE", "ERROR_NOT_CODE", "ERROR_UNKNOW")
@@ -80,10 +80,11 @@ def send(phoneid):
 
         # 写入数据，舍弃旧数据
         data_new[id] = data[id]
-        time.sleep(6)
+        time.sleep(1)
 
     set_one_user_data(phoneid, data_new)
-
+    # if not config == config_new:
+    #     set_one_user_config(phoneid,config_new)
 
 ids = get_all_user_phone()
 for phoneid in ids.get("phoneid"):

@@ -29,9 +29,9 @@ crontab -e
 
 在首行添加
 ``` 
-(*/30 * * * * python3 [YOURPATH]/main.py >> [YOURPATH]/out.log 2>&1)
+*/30 * * * * python3 [YOURPATH]/main.py >> [YOURPATH]/out.log 2>&1
 ### 例如 : 
-###   (*/30 * * * * python3 /www/express/main.py >> /www/express/out.log 2>&1)
+###   */30 * * * * python3 /www/express/main.py >> /www/express/out.log 2>&1
 ```
 其中[YOURPATH]替换为项目根目录.
 其中 */30 指代每30分钟执行一次,即30分钟进行一次查询. 这个时间将直接影响推送的延时效性.

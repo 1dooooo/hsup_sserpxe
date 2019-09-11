@@ -17,17 +17,22 @@ def detail_proxy(code, company=None):
     try:
         if _choice(2, company):
             api_com = "tracking"
+            print("try with "+api_com)
             result = detail_trackingmore_api.detail(code, company)
+            if not result['lastEvent']:
+                raise RuntimeError('empty result')
         else:
             api_com = "cainiao"
+            print("try with "+api_com)
             result = datail_cainiao_api.detail(code)
     except Exception as e:
         print("请求接口错误 with "+api_com)
         print(e)
         if not api_com == "cainiao":
             api_com = "cainiao"
+            print("re-try with "+api_com)
             result = datail_cainiao_api.detail(code)
-
+    
     return api_com, result
 
 
