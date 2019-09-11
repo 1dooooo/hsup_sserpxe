@@ -7,6 +7,12 @@ root_path = os.path.split(os.path.realpath(__file__))[0]
 
 
 def fix_time(to_fix_time, to_add):
+    '''
+    Add specific seconds to a given time, return the result time\n
+    to_fix_time: str presented time\n
+    to_add: seconds needed to add\n
+    return str presented result time
+    '''
     # 2019-09-03 05:34:29
     fixed_time_stamp = int(time.mktime(time.strptime(
         to_fix_time, "%Y-%m-%d %H:%M:%S"))) + int(to_add)
