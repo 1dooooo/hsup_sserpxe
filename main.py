@@ -7,7 +7,7 @@ import re
 # from logger import logger
 from handle import handle_data, handle_result
 from proxy import detail_proxy, belong_to_proxy
-from info import get_all_user_phone, get_one_user_config, get_one_user_data, set_one_user_data,set_one_user_config
+from info import get_all_user_phone, get_one_user_config, get_one_user_data, set_one_user_data, set_one_user_config
 
 
 ERROR = ("ERROR_FAULT_CODE", "ERROR_NOT_CODE", "ERROR_UNKNOW")
@@ -47,7 +47,7 @@ def send(phoneid):
     data_new = {}
     key = config.get("key")
     items = config.get("items")
-    for id,info in items.items():
+    for id, info in items.items():
         company = info.get('company')
         if not company:
             company = get_express_from_id(id)
@@ -85,10 +85,14 @@ def send(phoneid):
 
     set_one_user_data(phoneid, data_new)
     if not config_hash == hash(str(config)):
-        set_one_user_config(phoneid,config)
+        set_one_user_config(phoneid, config)
 
-phoneids = get_all_user_phone()
-for phoneid in phoneids.get("phoneid"):
-    print("+ = + = + = {t} = + = + ={phoneid}+ = + = + = {t} = + = + =".format(
-        phoneid=phoneid, t=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
-    send(phoneid)
+
+if __name__ == "__main__":
+    phoneids = get_all_user_phone()
+    if phoneids == None:
+        exit(0)
+    for phoneid in phoneids:
+        print("+ = + = + = {t} = + = + ={phoneid}+ = + = + = {t} = + = + =".format(
+            phoneid=phoneid, t=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
+        send(phoneid)
