@@ -1,0 +1,13 @@
+class express():
+    code = ""
+    description = ""
+    company = ""
+
+    def __init__(self,c1, p, d, c2):
+        self.code = c1
+        self.description = d
+        self.company = c2
+        pass
+
+    def __str__(self):
+        return "快递单号:{},快递描述:{},快递公司:{}".format(self.code,self.description,self.company)

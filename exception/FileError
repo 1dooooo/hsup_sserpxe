@@ -1,0 +1,6 @@
+class FileError(Exception):
+    def __init__(self, error_infor):
+        self.error = error_infor
+        
+    def __str__(self):
+        return self.error

@@ -1,0 +1,11 @@
+class item(express):
+    phone_id = ""
+
+    def __init__(self, p, c1, d, c2):
+        super().__init__(c1, d, c2)
+        self.phone_id = p
+
+    def __str__(self):
+        return "用户手机号:{},".format(self.phone_id) + super.__str__()
+
+    pass

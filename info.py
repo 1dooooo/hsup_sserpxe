@@ -27,7 +27,7 @@ def get_one_user_data(phoneid):
     user_path = root_path + '/data/' + str(phoneid) + '_data.json'
     if not os.path.exists(user_path):
         return None
-    return json.load(user_path)
+    return json.load(open(user_path, encoding="utf-8"))
 
 
 def set_one_user_data(phoneid, data):

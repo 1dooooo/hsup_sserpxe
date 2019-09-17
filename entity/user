@@ -1,0 +1,13 @@
+def user():
+    '''
+    description : user entity, to support user information handler.
+    '''
+    phone_id = ""
+    key = ""
+
+    def __init__(self, p, k):
+        self.phone_id = p
+        self.key = k
+
+    def __str__(self):
+        return "用户手机号:{}, 用户key:{}".format(self.phone_id, self.key)
